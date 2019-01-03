@@ -1,6 +1,25 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import User 
+# from django.contrib.auth.models import User
+
+class Client(models.Model):
+    STATUS_CHOICE = (
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    )
+    uuid = models.CharField(unique=True, default=uuid.uuid4, max_length=255, editable=False)
+    username = models.CharField(max_length=128)
+    password = models.CharField(max_length=128)
+    email = models.EmailField()
+    status = models.CharField('Status',max_length=32, default='Active', choices=STATUS_CHOICE)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField('Date Joined', auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Client"
+        verbose_name_plural = "Clients"
+        db_table = "Clients"
 
 
 class Category(models.Model):
@@ -32,7 +51,7 @@ class Book(models.Model):
     )
     uuid = models.CharField(unique=True, default=uuid.uuid4, max_length=255, editable=False)
     name = models.CharField(max_length=128)
-    user = models.ForeignKey(User, blank=False, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(Client, blank=False, on_delete=models.DO_NOTHING)
     category = models.ForeignKey(Category, blank=True, on_delete=models.DO_NOTHING)
     is_open = models.BooleanField('Is Open', default=True)
     is_release = models.BooleanField('Is Release', default=True)
@@ -64,7 +83,7 @@ class Document(models.Model):
     )
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=128)
-    user = models.ForeignKey(User, blank=False, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(Client, blank=False, on_delete=models.DO_NOTHING)
     book = models.ForeignKey(Book, blank=False, on_delete=models.DO_NOTHING)
     str_id = models.IntegerField()
     sort_id = models.IntegerField()

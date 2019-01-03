@@ -42,19 +42,23 @@
                             {% csrf_token %}
 	                    	<div class="form-group">
 	                    		<label class="sr-only" for="form-name">Name</label>
-	                        	<input type="text" name="form-name" placeholder="Name..." class="form-name form-control" id="form-name">
+	                        	<input type="text" name="username" placeholder="Name..." class="form-name form-control" id="form-name">
+								<p>{{form.username.errors}}</p>
 	                        </div>
 	                        <div class="form-group">
 	                        	<label class="sr-only" for="form-password1">Password</label>
-	                        	<input type="password" name="form-password1" placeholder="Password..." class="form-password1 form-control" id="form-password1">
+	                        	<input type="password" name="password1" placeholder="Password..." class="form-password1 form-control" id="form-password1">
+								<p>{{form.password1.errors}}</p>
 	                        </div>
                             <div class="form-group">
 	                        	<label class="sr-only" for="form-password2">Confirm Password</label>
-	                        	<input type="password" name="form-password2" placeholder="Password..." class="form-password2 form-control" id="form-password2">
+	                        	<input type="password" name="password2" placeholder="Password..." class="form-password2 form-control" id="form-password2">
+								<p>{{form.password2.errors}}</p>
 	                        </div>
 	                        <div class="form-group">
 	                        	<label class="sr-only" for="form-email">Email</label>
-	                        	<input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+	                        	<input type="email" name="email" placeholder="Email..." class="form-email form-control" id="form-email">
+								<p>{{form.email.errors}}</p>
 	                        </div>
 	                        <button type="submit" class="btn">Sign up!</button>
 	                    </form>
