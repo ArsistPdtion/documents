@@ -21,6 +21,9 @@ class Client(models.Model):
         verbose_name_plural = "Clients"
         db_table = "Clients"
 
+    def __str__(self):
+        return self.username
+
 
 class Category(models.Model):
     STATUS_CHOICE = (

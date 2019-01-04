@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from  django.views.generic import View
 from django.contrib.auth.models import User
 from .forms import *
-from .models import Client
+from .models import Client, Book
 from django.urls import reverse
 
 def index(request):
@@ -49,7 +49,9 @@ class Login(View):
 				if client.password != password:
 					return HttpResponse("Password error")
 				else:
-					return HttpResponse("login successful!")
+					uuid = client.uuid
+					print("uuid is :",uuid)
+					return redirect(reverse('book_list', kwargs={'uuid': uuid}))
 			except:
 				return HttpResponse("The User does not exist!")
 		else:
@@ -58,4 +60,18 @@ class Login(View):
 
 
 class BookList(View):
+	template = 'book/book_list.html'
+	def get(self,request, *args, **kwargs):
+		client_uuid = self.kwargs.get('uuid')
+		client = Client.objects.get(uuid=client_uuid)
+		books = Book.objects.filter(user=client)
+		print("books is:",books,len(books))
+		return render(request, self.template, {'books': books})
+
+
+class BookOverView(View):
+	pass
+
+
+class BookEditor(View):
 	pass
